@@ -7,6 +7,9 @@ on:
   pull_request:
 
 jobs:
+
+try {
+
   terraform:
     name: 'Terraform'
     env:
@@ -45,3 +48,6 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
+} catch (error) {
+  core.setFailed(error.message);
+}
