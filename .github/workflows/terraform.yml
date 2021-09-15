@@ -7,9 +7,6 @@ on:
   pull_request:
 
 jobs:
-
-try {
-
   terraform:
     name: 'Terraform'
     env:
@@ -17,7 +14,6 @@ try {
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
-      
     runs-on: ubuntu-latest
     environment: production
 
@@ -48,6 +44,3 @@ try {
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
-} catch (error) {
-  core.setFailed(error.message);
-}
