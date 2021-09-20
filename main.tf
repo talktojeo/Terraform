@@ -1,17 +1,14 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source = "hashicorp/azurerm"
-      version = "2.76.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
-resource "azurerm_resource_group" "terr_resgroup1" {
-  name = "res_group194758567"
+resource "azurerm_resource_group" "terr_crtresou" {
+  for_each = var.res_names
+  name = each.key
   location = "uksouth"
 }
+data "azurerm_virtual_machine" "fx_vm_id" {
+  # for_each = var.vmlists
+  name = "win10"
+  resource_group_name = "RES_ANSIBLE"
+  }
+  output "terrout" {
+    value = data.azurerm_virtual_machine.fx_vm_id.id
+  }
+
