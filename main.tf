@@ -5,9 +5,12 @@ resource "azurerm_resource_group" "this" {
 
 resource "azurerm_virtual_network" "this" {
   name = "vnet1"
-  address_space = [ "10.0.0.1" ]
+  address_space = [ "10.0.0.1/16" ]
   resource_group_name = azurerm_resource_group.this.name
   location = azurerm_resource_group.this.location
+  tags = {
+    "env" = "dev"
+  }
   depends_on = [
     azurerm_resource_group.this
   ]
